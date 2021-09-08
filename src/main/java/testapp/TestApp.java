@@ -1,11 +1,19 @@
 package testapp;
 
+import com.google.gson.Gson;
+import testapp.models.events.*;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
 public class TestApp {
 
+    private static Gson gson = new Gson();
+
     public static void main(String[] args) {
+
+
+
         try {
             // open websocket
             final WebsocketClientEndpoint clientEndPoint = new WebsocketClientEndpoint(new URI("ws://<hostname>:<port>/ws"));
@@ -13,7 +21,99 @@ public class TestApp {
             // add listener
             clientEndPoint.addMessageHandler(new WebsocketClientEndpoint.MessageHandler() {
                 public void handleMessage(String message) {
-                    //System.out.println(message);
+                    BaseEvent baseEvent = gson.fromJson(message, BaseEvent.class);
+                    switch (baseEvent.getEvent()){
+                        case "ChannelOccupied": {
+                            ChannelOccupiedEvent channelOccupiedEvent = gson.fromJson(message, ChannelOccupiedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "CallActive": {
+                            CallActiveEvent callActiveEvent = gson.fromJson(message, CallActiveEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "CallInactive": {
+                            CallInactiveEvent callInactiveEvent = gson.fromJson(message, CallInactiveEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "CallInitiated": {
+                            CallInitiatedEvent callInitiatedEvent = gson.fromJson(message, CallInitiatedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "ConferenceEstablished": {
+                            ConferenceEstablishedEvent conferenceEstablishedEvent = gson.fromJson(message, ConferenceEstablishedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "DestinationConnected": {
+                            DestinationConnectedEvent destinationConnectedEvent = gson.fromJson(message, DestinationConnectedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "OperationFailed": {
+                            OperationFailedEvent operationFailedEvent = gson.fromJson(message, OperationFailedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "AgentStateChanged": {
+                            AgentStateChangedEvent agentStateChangedEvent = gson.fromJson(message, AgentStateChangedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "TransferCancel": {
+                            TransferCancelEvent transferCancelEvent = gson.fromJson(message, TransferCancelEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "SessionStateChanged": {
+                            SessionStateChangeEvent sessionStateChangeEvent = gson.fromJson(message, SessionStateChangeEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "ChannelIdle": {
+                            ChannelIdleEvent channelIdleEvent = gson.fromJson(message, ChannelIdleEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "CallDisconnected": {
+                            CallDisconnectedEvent callDisconnected = gson.fromJson(message, CallDisconnectedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "CallTransferred": {
+                            CallTransferredEvent callTransferred = gson.fromJson(message, CallTransferredEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "ConnectionStatusChanged": {
+                            ConnectionStatusChangedEvent connectionStatusChanged = gson.fromJson(message, ConnectionStatusChangedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "SessionShutdown": {
+                            SessionShutdownEvent sessionShutdown = gson.fromJson(message, SessionShutdownEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "ConferenceCancel": {
+                            ConferenceCancelEvent conferenceCancel = gson.fromJson(message, ConferenceCancelEvent.class);
+                            // some logic here...
+                            break;
+                        }
+                        case "ConferenceConfirmed": {
+                            ConferenceConfirmedEvent conferenceConfirmed = gson.fromJson(message, ConferenceConfirmedEvent.class);
+                            // some logic here...
+                            break;
+                        }
+
+                        default:
+                            System.out.println("Event not supported");
+                            break;
+
+                    }
                 }
             });
 
